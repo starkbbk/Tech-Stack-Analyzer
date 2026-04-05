@@ -33,7 +33,7 @@
 - **Caching**: Redis (24-hour result caching)
 
 ### AI Integration
-- **OpenAI GPT-4**: For intelligent cost estimation and senior engineer-level insights.
+- **OpenRouter**: Uses the `qwen/qwen-2.5-72b-instruct:free` model for intelligent cost estimation and senior engineer-level insights.
 
 ---
 
