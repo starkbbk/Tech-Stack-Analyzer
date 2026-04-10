@@ -21,16 +21,18 @@ RUN apt-get update && apt-get install -y \
     libasound2 \
     libpangocairo-1.0-0 \
     libpango-1.0-0 \
-    --no-install-recommends \
+    --no-install-recommends
+
+# Add Google Chrome repository and install
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Set environment variables for Puppeteer
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
-
-# Note: The above executable path might not be correct if using default puppeteer install. 
-# Puppeteer's internal chromium is usually at /app/node_modules/puppeteer/.local-chromium/...
-# But simplified approach: Let puppeteer download it and just provide system deps.
 
 WORKDIR /app
 

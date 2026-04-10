@@ -32,7 +32,8 @@ export async function scrapeWebsite(url: string, scanId: string): Promise<Scrape
 
   const browser = await puppeteer.launch({
     headless: true, // true in puppeteer 22+ uses the new headless by default or 'new'. Use true.
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security'],
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security', '--disable-dev-shm-usage'],
   });
 
   try {
