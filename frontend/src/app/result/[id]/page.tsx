@@ -66,11 +66,13 @@ interface ScanResult {
   };
   securityScore: number;
   trustScore: number;
-  securityAudit: {
-    trustLevel: "Real" | "Likely Real" | "Suspicious" | "Likely Fake";
-    trustReason: string;
     vulnerabilities: string[];
     securityFeatures: string[];
+  };
+  businessPurpose: {
+    summary: string;
+    targetAudience: string;
+    monetizationModel: string;
   };
   aiInsights: {
     summary: string;
@@ -231,6 +233,39 @@ export default function ResultPage({ params }: { params: { id: string } }) {
                  </div>
             </div>
         </section>
+
+        {/* Website Overview Section */}
+        {result.businessPurpose && result.businessPurpose.summary && (
+          <section className="bg-card border border-gray-800 p-8 md:p-12 rounded-3xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center border border-accent/20">
+                  <Zap className="w-5 h-5 text-accent" />
+                </div>
+                <h2 className="text-2xl font-header font-bold text-white uppercase tracking-widest">Website_Overview</h2>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="md:col-span-2">
+                  <p className="text-xl font-body text-gray-200 leading-relaxed">
+                    {result.businessPurpose.summary}
+                  </p>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <div className="bg-black/40 border border-gray-800 p-4 rounded-xl">
+                    <span className="text-gray-500 text-[10px] font-code uppercase block mb-1">Target_Audience</span>
+                    <span className="text-white font-code text-sm">{result.businessPurpose.targetAudience}</span>
+                  </div>
+                  <div className="bg-black/40 border border-gray-800 p-4 rounded-xl">
+                    <span className="text-gray-500 text-[10px] font-code uppercase block mb-1">Monetization</span>
+                    <span className="text-accent font-code text-sm">{result.businessPurpose.monetizationModel}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Tech Stack Grid */}
         <section className="flex flex-col gap-8">

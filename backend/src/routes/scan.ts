@@ -145,6 +145,7 @@ async function runScanJob(scanId: string, url: string) {
         vulnerabilities: security.vulnerabilities || [],
         securityFeatures: security.securityFeatures || []
       },
+      businessPurpose: aiInsights.businessPurpose || { summary: '', targetAudience: '', monetizationModel: '' },
       scores,
       url,
       timestamp: new Date()

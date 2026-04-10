@@ -36,8 +36,15 @@ Provide insights about:
 3. Technical debt risks
 4. Better alternatives
 5. Interesting observations
+6. **Detailed Explanation**: What does this website actually do? (e.g., Is it a SaaS for devs, an E-commerce for fashion, etc.)
+
 Be conversational and interesting in your tone, like a senior engineer.
-Format ONLY as a valid JSON object with keys: 'summary' (string), 'observations' (array of strings), 'recommendations' (array of strings), 'techDebtWarnings' (array of strings).`;
+Format ONLY as a valid JSON object with keys: 
+'summary' (string), 
+'observations' (array of strings), 
+'recommendations' (array of strings), 
+'techDebtWarnings' (array of strings),
+'businessPurpose' (object with keys: 'summary' (string), 'targetAudience' (string), 'monetizationModel' (string)).`;
 
   try {
     const completion = await openai.chat.completions.create({

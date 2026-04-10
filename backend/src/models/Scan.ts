@@ -42,6 +42,11 @@ export interface IScan extends Document {
     recommendations: string[];
     techDebtWarnings: string[];
   };
+  businessPurpose: {
+    summary: string;
+    targetAudience: string;
+    monetizationModel: string;
+  };
 }
 
 const ScanSchema: Schema = new Schema({
@@ -85,6 +90,11 @@ const ScanSchema: Schema = new Schema({
     observations: { type: [String], default: [] },
     recommendations: { type: [String], default: [] },
     techDebtWarnings: { type: [String], default: [] },
+  },
+  businessPurpose: {
+    summary: { type: String, default: '' },
+    targetAudience: { type: String, default: '' },
+    monetizationModel: { type: String, default: '' },
   }
 });
 
