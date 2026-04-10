@@ -2,8 +2,6 @@
 
 **Tech Stack Analyzer** is a powerful, production-ready full-stack application designed to deconstruct any website's architecture. It scans a URL to identify its frontend frameworks, backend technologies, cloud infrastructure, analytics tools, and more.
 
-![Project Preview](https://tech-stack-analyzer-mu.vercel.app/)
-
 ---
 
 ## 🎯 Core Concept
