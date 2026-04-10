@@ -34,8 +34,10 @@ router.post('/', async (req, res) => {
     console.error('MongoDB error, proceeding anyway', e.message);
   }
 
-  // Start background job
-  runScanJob(scanId, targetUrl).catch(console.error);
+  // Slight delay so SSE client can connect before events start firing
+  setTimeout(() => {
+    runScanJob(scanId, targetUrl).catch(console.error);
+  }, 500);
 
   res.json({ scanId });
 });

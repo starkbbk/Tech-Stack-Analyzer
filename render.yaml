@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: tech-analyzer-backend
+    runtime: docker
+    dockerContext: backend
+    dockerfilePath: backend/Dockerfile
+    envVars:
+      - key: PORT
+        value: 5005
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false # Set this in Render dashboard (e.g., MongoDB Atlas URI)
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: tsa-redis
+          property: connectionString
+      - key: OPENROUTER_API_KEY
+        sync: false # Set this in Render dashboard
+      - key: FRONTEND_URL
+        value: https://tech-stack-analyzer.vercel.app # Placeholder
+
+  - type: redis
+    name: tsa-redis
+    plan: free
+    ipAllowList: [] # Only allow internal connections
