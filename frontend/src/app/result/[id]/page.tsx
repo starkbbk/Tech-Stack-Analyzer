@@ -11,7 +11,6 @@ import {
   BarChart3, 
   CreditCard, 
   ShieldCheck, 
-  ShieldCheck, 
   Cpu, 
   Share2,
   Download,
