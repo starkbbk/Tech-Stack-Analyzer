@@ -64,9 +64,6 @@ interface ScanResult {
     total: number;
     currency: string;
   };
-    total: number;
-    currency: string;
-  };
   securityScore: number;
   trustScore: number;
   securityAudit: {
