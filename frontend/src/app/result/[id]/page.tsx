@@ -22,6 +22,7 @@ import TechCard from "@/components/TechCard";
 import CostChart from "@/components/CostChart";
 import ScoreGauge from "@/components/ScoreGauge";
 import AIInsights from "@/components/AIInsights";
+import RevenueChart from "@/components/RevenueChart";
 import MatrixBackground from "@/components/MatrixBackground";
 import { useRouter } from "next/navigation";
 
@@ -52,6 +53,13 @@ interface ScanResult {
     cdn: number;
     database: number;
     analytics: number;
+    total: number;
+    currency: string;
+  };
+  revenue: {
+    ads: number;
+    subscriptions: number;
+    sales: number;
     total: number;
     currency: string;
   };
@@ -235,6 +243,11 @@ export default function ResultPage({ params }: { params: { id: string } }) {
 
         {/* Cost Section */}
         <CostChart data={result.cost} />
+
+        {/* Revenue Section */}
+        {result.revenue && result.revenue.total > 0 && (
+          <RevenueChart data={result.revenue} />
+        )}
 
         {/* AI Analysis Section */}
         <AIInsights insights={result.aiInsights} />
