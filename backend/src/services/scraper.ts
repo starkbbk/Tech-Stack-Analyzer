@@ -31,8 +31,7 @@ export async function scrapeWebsite(url: string, scanId: string): Promise<Scrape
   scanEventEmitter.emit(`progress_${scanId}`, { status: 'Connecting to website...', percent: 10 });
 
   const browser = await puppeteer.launch({
-    headless: true, // true in puppeteer 22+ uses the new headless by default or 'new'. Use true.
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+    headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security', '--disable-dev-shm-usage'],
   });
 
