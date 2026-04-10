@@ -7,7 +7,7 @@ dotenv.config();
 // OpenRouter is OpenAI-compatible, so we can reuse the SDK with a different base URL
 const openai = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY,
+  apiKey: process.env.OPENROUTER_API_KEY || '',
   defaultHeaders: {
     "HTTP-Referer": "https://github.com/starkbbk/Tech-Stack-Analyzer", // Optional, for OpenRouter rankings
     "X-Title": "Tech Stack Analyzer", // Optional, for OpenRouter rankings
