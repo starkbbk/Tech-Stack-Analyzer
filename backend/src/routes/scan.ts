@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { scanEventEmitter } from '../utils/eventEmitter';
 import { scrapeWebsite } from '../services/scraper';
 import { detectTechnologies } from '../services/detector';
-import { generateAiInsights, estimateCost } from '../services/aiAnalyzer';
+import { generateAiInsights, estimateCost, estimateRevenue } from '../services/aiAnalyzer';
 import { setCache, getCache } from '../services/cacheService';
 import Scan from '../models/Scan';
 
@@ -113,9 +113,10 @@ async function runScanJob(scanId: string, url: string) {
     const techStack = detectTechnologies(scrapeData);
 
     // 3. AI Insights
-    const [aiInsights, cost] = await Promise.all([
+    const [aiInsights, cost, revenue] = await Promise.all([
       generateAiInsights(techStack, scanId),
-      estimateCost(techStack, scanId)
+      estimateCost(techStack, scanId),
+      estimateRevenue(techStack, scanId)
     ]);
 
     // Calculate dummy scores (in a real app, use lighthouse API)
@@ -134,6 +135,7 @@ async function runScanJob(scanId: string, url: string) {
       techStack,
       aiInsights,
       cost,
+      revenue,
       scores,
       url,
       timestamp: new Date()

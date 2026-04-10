@@ -90,3 +90,37 @@ Format ONLY as a valid JSON object with keys: 'hosting' (number), 'cdn' (number)
     };
   }
 }
+export async function estimateRevenue(stack: any, scanId: string) {
+  if (!process.env.OPENROUTER_API_KEY || process.env.OPENROUTER_API_KEY === 'your_openrouter_api_key_here') {
+    scanEventEmitter.emit(`progress_${scanId}`, { status: 'Calculating revenue (skipped)...', percent: 98 });
+    return {
+      ads: 0, subscriptions: 0, sales: 0, total: 0, currency: 'USD'
+    };
+  }
+
+  scanEventEmitter.emit(`progress_${scanId}`, { status: 'Estimating potential revenue (Qwen)...', percent: 95 });
+
+  const prompt = `Given this tech stack: ${JSON.stringify(stack)}
+Estimate a realistic monthly revenue breakdown for a medium-scale application (~100k visits/month). 
+Consider: 
+- Ads revenue (if Ad tools detected)
+- Subscription revenue (if SaaS patterns detected)
+- Sales revenue (if E-commerce tools detected)
+Format ONLY as a valid JSON object with keys: 'ads' (number), 'subscriptions' (number), 'sales' (number), 'total' (number), 'currency' (must be 'USD').`;
+
+  try {
+    const completion = await openai.chat.completions.create({
+      messages: [{ role: 'user', content: prompt }],
+      model: AI_MODEL,
+    });
+
+    const content = completion.choices[0].message.content || '{}';
+    const cleanedContent = content.replace(/```json|```/g, '').trim();
+    return JSON.parse(cleanedContent);
+  } catch (error: any) {
+    console.error('OpenRouter Error (Revenue):', error.message);
+    return {
+      ads: 0, subscriptions: 0, sales: 0, total: 0, currency: 'USD'
+    };
+  }
+}

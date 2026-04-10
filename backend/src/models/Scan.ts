@@ -21,6 +21,13 @@ export interface IScan extends Document {
     total: number;
     currency: string;
   };
+  revenue: {
+    ads: number;
+    subscriptions: number;
+    sales: number;
+    total: number;
+    currency: string;
+  };
   aiInsights: {
     summary: string;
     observations: string[];
@@ -47,6 +54,13 @@ const ScanSchema: Schema = new Schema({
     cdn: { type: Number, default: 0 },
     database: { type: Number, default: 0 },
     analytics: { type: Number, default: 0 },
+    total: { type: Number, default: 0 },
+    currency: { type: String, default: 'USD' },
+  },
+  revenue: {
+    ads: { type: Number, default: 0 },
+    subscriptions: { type: Number, default: 0 },
+    sales: { type: Number, default: 0 },
     total: { type: Number, default: 0 },
     currency: { type: String, default: 'USD' },
   },
