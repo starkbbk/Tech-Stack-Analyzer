@@ -66,6 +66,9 @@ interface ScanResult {
   };
   securityScore: number;
   trustScore: number;
+  securityAudit: {
+    trustLevel: "Real" | "Likely Real" | "Suspicious" | "Likely Fake";
+    trustReason: string;
     vulnerabilities: string[];
     securityFeatures: string[];
   };
