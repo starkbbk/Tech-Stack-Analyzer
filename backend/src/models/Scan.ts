@@ -28,6 +28,14 @@ export interface IScan extends Document {
     total: number;
     currency: string;
   };
+  securityScore: number;
+  trustScore: number;
+  securityAudit: {
+    trustLevel: 'Real' | 'Likely Real' | 'Suspicious' | 'Likely Fake';
+    trustReason: string;
+    vulnerabilities: string[];
+    securityFeatures: string[];
+  };
   aiInsights: {
     summary: string;
     observations: string[];
@@ -63,6 +71,14 @@ const ScanSchema: Schema = new Schema({
     sales: { type: Number, default: 0 },
     total: { type: Number, default: 0 },
     currency: { type: String, default: 'USD' },
+  },
+  securityScore: { type: Number, default: 0 },
+  trustScore: { type: Number, default: 0 },
+  securityAudit: {
+    trustLevel: { type: String, enum: ['Real', 'Likely Real', 'Suspicious', 'Likely Fake'], default: 'Likely Real' },
+    trustReason: { type: String, default: '' },
+    vulnerabilities: { type: [String], default: [] },
+    securityFeatures: { type: [String], default: [] },
   },
   aiInsights: {
     summary: { type: String, default: '' },

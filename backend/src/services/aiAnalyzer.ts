@@ -124,3 +124,52 @@ Format ONLY as a valid JSON object with keys: 'ads' (number), 'subscriptions' (n
     };
   }
 }
+export async function generateSecurityAudit(stack: any, headers: any, scanId: string) {
+  if (!process.env.OPENROUTER_API_KEY || process.env.OPENROUTER_API_KEY === 'your_openrouter_api_key_here') {
+    scanEventEmitter.emit(`progress_${scanId}`, { status: 'Security audit skipped', percent: 99 });
+    return {
+      trustLevel: 'Likely Real',
+      trustReason: 'API Key missing for deep analysis',
+      vulnerabilities: [],
+      securityFeatures: []
+    };
+  }
+
+  scanEventEmitter.emit(`progress_${scanId}`, { status: 'Analyzing website security & legitimacy...', percent: 97 });
+
+  const prompt = `Given this tech stack: ${JSON.stringify(stack)}
+  And these HTTP headers: ${JSON.stringify(headers)}
+  
+  Perform a security and trust audit of this website.
+  1. Determine if it is likely 'Real', 'Likely Real', 'Suspicious', or 'Likely Fake'.
+  2. Identify security features present (e.g., SSL, CSP, HSTS).
+  3. Identify potential vulnerabilities or trust issues (e.g., missing headers, obscure tech, inconsistent stack).
+  4. Provide a 1-sentence reason for the trust level.
+  
+  Format ONLY as a valid JSON object with keys: 
+  'trustLevel' (string), 
+  'trustReason' (string), 
+  'vulnerabilities' (array of strings), 
+  'securityFeatures' (array of strings),
+  'securityScore' (number 0-100),
+  'trustScore' (number 0-100).`;
+
+  try {
+    const completion = await openai.chat.completions.create({
+      messages: [{ role: 'user', content: prompt }],
+      model: AI_MODEL,
+    });
+
+    const content = completion.choices[0].message.content || '{}';
+    const cleanedContent = content.replace(/```json|```/g, '').trim();
+    return JSON.parse(cleanedContent);
+  } catch (error: any) {
+    console.error('OpenRouter Error (Security):', error.message);
+    return {
+      trustLevel: 'Likely Real',
+      trustReason: 'AI analysis failed',
+      vulnerabilities: [],
+      securityFeatures: []
+    };
+  }
+}

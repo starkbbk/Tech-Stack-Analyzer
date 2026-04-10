@@ -23,6 +23,7 @@ import CostChart from "@/components/CostChart";
 import ScoreGauge from "@/components/ScoreGauge";
 import AIInsights from "@/components/AIInsights";
 import RevenueChart from "@/components/RevenueChart";
+import SecurityAudit from "@/components/SecurityAudit";
 import MatrixBackground from "@/components/MatrixBackground";
 import { useRouter } from "next/navigation";
 
@@ -62,6 +63,17 @@ interface ScanResult {
     sales: number;
     total: number;
     currency: string;
+  };
+    total: number;
+    currency: string;
+  };
+  securityScore: number;
+  trustScore: number;
+  securityAudit: {
+    trustLevel: "Real" | "Likely Real" | "Suspicious" | "Likely Fake";
+    trustReason: string;
+    vulnerabilities: string[];
+    securityFeatures: string[];
   };
   aiInsights: {
     summary: string;
@@ -248,6 +260,13 @@ export default function ResultPage({ params }: { params: { id: string } }) {
         {result.revenue && result.revenue.total > 0 && (
           <RevenueChart data={result.revenue} />
         )}
+
+        {/* Security & Trust Section */}
+        <SecurityAudit 
+          data={result.securityAudit} 
+          securityScore={result.securityScore} 
+          trustScore={result.trustScore} 
+        />
 
         {/* AI Analysis Section */}
         <AIInsights insights={result.aiInsights} />

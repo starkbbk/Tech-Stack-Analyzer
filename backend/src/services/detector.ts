@@ -166,8 +166,22 @@ export function detectTechnologies(data: ScrapeResult): Record<string, TechItem[
   if (html.includes('google.com/recaptcha') || html.includes('gstatic.com/recaptcha')) {
     addTech('reCAPTCHA', 'security', 99, '');
   }
-  if (hasHeaderValue('x-xss-protection', '') && hasHeaderValue('x-frame-options', '')) {
-    addTech('Security Headers (Helmet/Custom)', 'security', 80, '');
+  
+  // Security Headers
+  if (hasHeaderValue('content-security-policy', '')) {
+    addTech('Content Security Policy (CSP)', 'security', 99, '');
+  }
+  if (hasHeaderValue('strict-transport-security', '')) {
+    addTech('HSTS (SSL Enforcement)', 'security', 99, '');
+  }
+  if (hasHeaderValue('x-frame-options', '')) {
+    addTech('Anti-Clickjacking (X-Frame)', 'security', 90, '');
+  }
+  if (hasHeaderValue('x-content-type-options', 'nosniff')) {
+    addTech('MIME Sniffing Protection', 'security', 90, '');
+  }
+  if (hasHeaderValue('x-xss-protection', '')) {
+    addTech('XSS Filtering', 'security', 80, '');
   }
 
   // Group by category

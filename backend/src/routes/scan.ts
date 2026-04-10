@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { scanEventEmitter } from '../utils/eventEmitter';
 import { scrapeWebsite } from '../services/scraper';
 import { detectTechnologies } from '../services/detector';
-import { generateAiInsights, estimateCost, estimateRevenue } from '../services/aiAnalyzer';
+import { generateAiInsights, estimateCost, estimateRevenue, generateSecurityAudit } from '../services/aiAnalyzer';
 import { setCache, getCache } from '../services/cacheService';
 import Scan from '../models/Scan';
 
@@ -113,10 +113,11 @@ async function runScanJob(scanId: string, url: string) {
     const techStack = detectTechnologies(scrapeData);
 
     // 3. AI Insights
-    const [aiInsights, cost, revenue] = await Promise.all([
+    const [aiInsights, cost, revenue, security] = await Promise.all([
       generateAiInsights(techStack, scanId),
       estimateCost(techStack, scanId),
-      estimateRevenue(techStack, scanId)
+      estimateRevenue(techStack, scanId),
+      generateSecurityAudit(techStack, scrapeData.headers, scanId)
     ]);
 
     // Calculate dummy scores (in a real app, use lighthouse API)
@@ -136,6 +137,14 @@ async function runScanJob(scanId: string, url: string) {
       aiInsights,
       cost,
       revenue,
+      securityScore: security.securityScore || 0,
+      trustScore: security.trustScore || 0,
+      securityAudit: {
+        trustLevel: security.trustLevel || 'Likely Real',
+        trustReason: security.trustReason || '',
+        vulnerabilities: security.vulnerabilities || [],
+        securityFeatures: security.securityFeatures || []
+      },
       scores,
       url,
       timestamp: new Date()
