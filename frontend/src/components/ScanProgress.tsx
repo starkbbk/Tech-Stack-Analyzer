@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
+import { CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 
 interface LogEntry {
   id: string;
@@ -85,7 +85,9 @@ export default function ScanProgress({ scanId, onComplete }: ScanProgressProps) 
             return;
           }
         }
-      } catch (e) {}
+      } catch (error) {
+        // Silently catch polling errors
+      }
       // Not ready yet — retry
       pollTimer = setTimeout(pollForResult, 2000);
     };

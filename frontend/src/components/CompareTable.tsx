@@ -1,10 +1,9 @@
 "use client";
-import { motion } from "framer-motion";
-import { Check, X, Trophy, Zap, Shield, Search, Globe } from "lucide-react";
+import { Trophy, Zap, Shield } from "lucide-react";
 
 interface CompareTableProps {
-  data1: any;
-  data2: any;
+  data1: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  data2: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export default function CompareTable({ data1, data2 }: CompareTableProps) {

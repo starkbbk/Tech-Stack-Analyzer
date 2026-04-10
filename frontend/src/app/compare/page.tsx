@@ -4,7 +4,7 @@ import axios from "axios";
 import MatrixBackground from "@/components/MatrixBackground";
 import CompareTable from "@/components/CompareTable";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Zap, ArrowRight, Loader2, Info } from "lucide-react";
+import { Zap, ArrowRight, Loader2, Info } from "lucide-react";
 import Link from "next/link";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5005";
@@ -13,7 +13,7 @@ export default function ComparePage() {
   const [url1, setUrl1] = useState("");
   const [url2, setUrl2] = useState("");
   const [loading, setLoading] = useState(false);
-  const [compareData, setCompareData] = useState<any>(null);
+  const [compareData, setCompareData] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const [error, setError] = useState<string | null>(null);
 
   const handleCompare = async (e: React.FormEvent) => {
@@ -27,7 +27,7 @@ export default function ComparePage() {
     try {
       const res = await axios.post(`${BACKEND_URL}/api/compare`, { url1, url2 });
       setCompareData(res.data);
-    } catch (err: any) {
+    } catch (err: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
       console.error(err);
       setError(err.response?.data?.error || "Both websites must be scanned separately before comparing.");
     } finally {

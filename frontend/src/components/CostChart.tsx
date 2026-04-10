@@ -10,7 +10,7 @@ import {
   Cell 
 } from "recharts";
 import { motion } from "framer-motion";
-import { DollarSign, PieChart } from "lucide-react";
+import { DollarSign } from "lucide-react";
 
 interface CostData {
   hosting: number;

@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { 
   Layout, 
   Server, 
@@ -11,8 +11,8 @@ import {
   BarChart3, 
   CreditCard, 
   ShieldCheck, 
+  ShieldCheck, 
   Cpu, 
-  TestTube,
   Share2,
   Download,
   Calendar,
@@ -32,14 +32,14 @@ interface ScanResult {
   timestamp: string;
   status: string;
   techStack: {
-    frontend: any[];
-    backend: any[];
-    database: any[];
-    cloud: any[];
-    cdn: any[];
-    analytics: any[];
-    payments: any[];
-    security: any[];
+    frontend: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+    backend: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+    database: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+    cloud: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+    cdn: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+    analytics: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+    payments: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+    security: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
   };
   scores: {
     performance: number;

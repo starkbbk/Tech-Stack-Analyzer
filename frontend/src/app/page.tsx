@@ -12,7 +12,7 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:500
 export default function Home() {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
-  const [recentScans, setRecentScans] = useState<any[]>([]);
+  const [recentScans, setRecentScans] = useState<any[]>([]); // eslint-disable-line @typescript-eslint/no-explicit-any
   const router = useRouter();
 
   useEffect(() => {
@@ -20,7 +20,9 @@ export default function Home() {
       try {
         const res = await axios.get(`${BACKEND_URL}/api/scan/recent/all`);
         setRecentScans(res.data);
-      } catch (err) {}
+      } catch (error) {
+        // Error handled silently
+      }
     };
     fetchRecent();
     

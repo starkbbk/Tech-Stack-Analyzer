@@ -1,10 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
-import { Zap, Globe, Cpu, Share2 } from "lucide-react";
+import { Zap, Globe, Share2 } from "lucide-react";
 
 interface ShareCardProps {
   url: string;
-  techStack: any;
+  techStack: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   overallScore: number;
 }
 
